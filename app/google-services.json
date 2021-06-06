@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "409506166583",
+    "project_id": "ssghk-bdc76",
+    "storage_bucket": "ssghk-bdc76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:409506166583:android:66df0190c6bc9dd61a0cb2",
+        "android_client_info": {
+          "package_name": "edu.ritindia.ssghk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "409506166583-t6a4fd55p3f1ks4vvjheqssh4glhpc7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXHMtWT_qhofFk4rhGSbOVPdB26NH1Wn0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "409506166583-t6a4fd55p3f1ks4vvjheqssh4glhpc7u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
