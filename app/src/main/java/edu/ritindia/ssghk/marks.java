@@ -37,7 +37,7 @@ import edu.ritindia.ssghk.notice.NoticeData;
 
 public class marks extends AppCompatActivity {
 
-    private CardView addImage;
+    private CardView addfile;
     private EditText Title;
     private Button uploadMarksBtn;
     private final int REQ = 1;
@@ -59,12 +59,12 @@ public class marks extends AppCompatActivity {
 
         pd = new ProgressDialog(this);
 
-        addImage = findViewById(R.id.addImage);
+        addfile = findViewById(R.id.addImage);
         noticeImageView = findViewById(R.id.noticeImageView);
         Title = findViewById(R.id.Title);
         uploadMarksBtn = findViewById(R.id.uploadMarksBtn);
 
-        addImage.setOnClickListener(new View.OnClickListener() {
+        addfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {

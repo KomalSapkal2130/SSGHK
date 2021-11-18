@@ -9,7 +9,6 @@ import android.view.View;
 
 
 import edu.ritindia.ssghk.notice.DeleteNoticeActivity;
-import edu.ritindia.ssghk.notice.NoticeAdapter;
 import edu.ritindia.ssghk.notice.UploadNotice;
 
 import edu.ritindia.ssghk.faculty.UpdateFaculty;
@@ -18,7 +17,7 @@ import edu.ritindia.ssghk.faculty.UpdateFaculty;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    CardView uploadNotice, addGalleryImage, addEbook, faculty, deleteNotice,marks,attendance,timetable;
+    CardView uploadNotice, addGalleryImage, addEbook, faculty, deleteNotice,marks,timetable,examtimetable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +30,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         faculty = findViewById(R.id.faculty);
         deleteNotice = findViewById(R.id.delete);
         marks = findViewById(R.id.marks);
-        attendance = findViewById(R.id.attendance);
         timetable = findViewById(R.id.timetable);
+        examtimetable = findViewById(R.id.examtimetable);
 
         uploadNotice.setOnClickListener(this);
         addGalleryImage.setOnClickListener(this);
@@ -40,8 +39,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         faculty.setOnClickListener(this);
         deleteNotice.setOnClickListener(this);
         marks.setOnClickListener(this);
-        attendance.setOnClickListener(this);
         timetable.setOnClickListener(this);
+        examtimetable.setOnClickListener(this);
 
     }
 
@@ -58,22 +57,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.addEbook:
                 startActivity(new Intent(getApplicationContext(), UploadStudyMaterialActivity.class));
                 break;
-
             case R.id.faculty:
                 startActivity(new Intent(getApplicationContext(), UpdateFaculty.class));
                 break;
-
             case R.id.delete:
                 startActivity(new Intent(getApplicationContext(), DeleteNoticeActivity.class));
                 break;
-            case R.id.attendance:
-                startActivity(new Intent(getApplicationContext(), Attendance.class));
+            case R.id.timetable:
+                startActivity(new Intent(getApplicationContext(), timetable.class));
                 break;
             case R.id.marks:
                 startActivity(new Intent(getApplicationContext(), marks.class));
                 break;
-            case R.id.timetable:
-                startActivity(new Intent(getApplicationContext(), timetable.class));
+            case R.id.examtimetable:
+                startActivity(new Intent(getApplicationContext(), Attendance.class));
                 break;
 
         }

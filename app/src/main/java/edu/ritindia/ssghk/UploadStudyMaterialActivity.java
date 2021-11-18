@@ -42,8 +42,8 @@ public class UploadStudyMaterialActivity extends AppCompatActivity {
     private EditText pdfTitle;
     private Button uploadpdfBtn;
     private TextView pdfTextView;
-    private String pdfName,title,category1,category2;
-    private Spinner imageCategory1,imageCategory2;
+    private String pdfName,title,category1,category2,category3;
+    private Spinner imageCategory1,imageCategory2,imageCategory3;
 
 
 
@@ -62,6 +62,7 @@ public class UploadStudyMaterialActivity extends AppCompatActivity {
 
         imageCategory1=findViewById(R.id.category_standard);
         imageCategory2=findViewById(R.id.category_division);
+        imageCategory3=findViewById(R.id.category_subject);
 
         databaseReference  = FirebaseDatabase.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -104,6 +105,22 @@ public class UploadStudyMaterialActivity extends AppCompatActivity {
             }
         });
 
+        String[] items3= new String[]{"Select Subject","Marathi","Hindi","English","Maths","Science","History","Geography","Others"};
+        imageCategory3.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,items3));
+
+        imageCategory3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category3=imageCategory3.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
+
         addpdf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
@@ -134,6 +151,10 @@ public class UploadStudyMaterialActivity extends AppCompatActivity {
                 {
                     Toast.makeText(UploadStudyMaterialActivity.this, "Please select Division", Toast.LENGTH_SHORT).show();
                 }
+                else if (category3.equals("Select Subject"))
+                {
+                    Toast.makeText(UploadStudyMaterialActivity.this, "Please select Subject", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     uploadpdf();
                 }
@@ -150,8 +171,8 @@ public class UploadStudyMaterialActivity extends AppCompatActivity {
         pd.setTitle("Please wait.....");
         pd.setMessage("Uploading your file....");
         pd.show();
-        StorageReference reference = storageReference.child("StudyMaterial/").child(category1).child(category2+" " +pdfName+"-"+System.currentTimeMillis()+".pdf");
-        reference.child(category1).child(category2).putFile(pdfdata).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+        StorageReference reference = storageReference.child("StudyMaterial/").child(category1).child(category2).child(category3+" " +pdfName+"-"+System.currentTimeMillis()+".pdf");
+        reference.child(category1).child(category2).child(category3).putFile(pdfdata).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
@@ -170,12 +191,12 @@ public class UploadStudyMaterialActivity extends AppCompatActivity {
 
     private void uploadData(String valueOf)
     {
-        String uniqueKey=databaseReference.child("Study Material").child(category1).child(category2).push().getKey();
+        String uniqueKey=databaseReference.child("Study Material").child(category1).child(category2).child(category3).push().getKey();
 
         HashMap data = new HashMap();
         data.put("pdfTitle",title);
         data.put("pdfUrl",valueOf);
-        databaseReference.child("Study Material").child(category1).child(category2).child(uniqueKey).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
+        databaseReference.child("Study Material").child(category1).child(category2).child(category3).child(uniqueKey).setValue(data).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull @NotNull Task<Void> task)
             {

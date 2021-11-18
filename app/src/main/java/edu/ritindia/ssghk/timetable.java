@@ -12,9 +12,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +50,8 @@ public class timetable extends AppCompatActivity {
     private StorageReference storageReference;
     String downloadUrl = "";
     private ProgressDialog pd;
+    private Spinner imageCategory1,imageCategory2,imageCategory3;
+    private String category1,category2,category3;
 
 
     @Override
@@ -63,6 +68,55 @@ public class timetable extends AppCompatActivity {
         noticeImageView = findViewById(R.id.noticeImageView);
         timetableTitle= findViewById(R.id.timetableTitle);
         uploadtimetableBtn = findViewById(R.id.uploadtimetableBtn);
+        imageCategory1=findViewById(R.id.category_timetable);
+        imageCategory2=findViewById(R.id.category_division);
+        imageCategory3=findViewById(R.id.category_standard);
+
+
+        String[] items1= new String[]{"Select category","Class Timetable","Exam Timetable"};
+        imageCategory1.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,items1));
+
+        imageCategory1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category1=imageCategory1.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
+
+
+        String[] items3= new String[]{"Select Standard","5th std","6th std","7th std","8th std","9th std","10th std","All"};
+        imageCategory3.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,items3));
+
+        imageCategory3.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category3=imageCategory3.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
+
+
+
+        String[] items2= new String[]{"Select Division","A","B","All"};
+        imageCategory2.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item,items2));
+
+        imageCategory2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                category2=imageCategory2.getSelectedItem().toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent){
+            }
+        });
 
         addImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,11 +133,27 @@ public class timetable extends AppCompatActivity {
                 if(timetableTitle.getText().toString().isEmpty()){
                     timetableTitle.setError("Empty");
                     timetableTitle.requestFocus();
-                }else if(bitmap == null){
+                }
+                else if(bitmap == null){
                     uploadData();
-                }else{
+                }
+                else if (category1.equals("Select category"))
+                {
+                    Toast.makeText(timetable.this, "Please select Category", Toast.LENGTH_SHORT).show();
+                }
+                else if (category2.equals("Select Division"))
+                {
+                    Toast.makeText(timetable.this, "Please select Division", Toast.LENGTH_SHORT).show();
+                }
+
+                else if (category3.equals("Select Standard")) {
+                    Toast.makeText(timetable.this, "Please select Standard", Toast.LENGTH_SHORT).show();
+
+                }
+                else{
                     uploadImage();
                 }
+
             }
         });
 
@@ -97,7 +167,7 @@ public class timetable extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
         byte[] finalimg = baos.toByteArray();
         final StorageReference filePath;
-        filePath = storageReference.child("Timetable").child(finalimg+"jpg");
+        filePath = storageReference.child("Timetable").child(category1).child(category3).child(category2).child(finalimg+"jpg");
         final UploadTask uploadTask = filePath.putBytes(finalimg);
         uploadTask.addOnCompleteListener(timetable.this, new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -128,7 +198,7 @@ public class timetable extends AppCompatActivity {
 
     private void uploadData() {
 
-        reference = reference.child("Timetable");
+        reference = reference.child("Timetable").child(category1).child(category3).child(category2);
         final String uniqueKey = reference.push().getKey();
 
         String title = timetableTitle.getText().toString();
